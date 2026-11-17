@@ -1,0 +1,13 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Track Sleep</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-content class="ion-padding ion-text-center">
+    <h1>{{time}}</h1>
+    <p>{{day}}</p>
+    <ion-button (click)="openModalLog()">Create Log</ion-button>
+  </ion-content>
+</ion-content>

@@ -1,19 +1,22 @@
 import { Component } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/angular/standalone';
+import { IonIcon, IonTabBar, IonTabButton, IonTabs } from '@ionic/angular/standalone';
 import { SleepService } from '../services/sleep.service';
 import { SleepData } from '../data/sleep-data';
 import { OvernightSleepData } from '../data/overnight-sleep-data';
 import { StanfordSleepinessData } from '../data/stanford-sleepiness-data';
+import { RouterLink } from '@angular/router';
+import { addIcons } from 'ionicons';
+import { moonOutline, library, menuOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent],
+  imports: [IonIcon, IonTabBar, IonTabButton, IonTabs],
 })
 export class HomePage {
-  constructor(public sleepService:SleepService) {
-
+	constructor(public sleepService:SleepService) {
+		addIcons({ moonOutline, library, menuOutline });
 	}
 
 	ngOnInit() {
