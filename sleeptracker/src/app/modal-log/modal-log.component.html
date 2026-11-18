@@ -1,12 +1,13 @@
 <ion-header>
   <ion-toolbar>
+    <ion-title class="ion-text-center">Overnight Sleep Log for {{timeStart}}</ion-title>
     <ion-buttons slot="start">
       <ion-button (click)="close()">
         Cancel
       </ion-button>
     </ion-buttons>
     <ion-buttons slot="end">
-      <ion-button (click)="close()">
+      <ion-button (click)="saveHistoryData()">
         Save Log
       </ion-button>
     </ion-buttons>
@@ -14,11 +15,37 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-datetime-button datetime="datetime" keep-contents-mounted="true">fdasfsd</ion-datetime-button>
-  <ion-datetime id="datetime" keep-contents-mounted="true"></ion-datetime>
+  <ion-item>
+    <ion-label>
+      <ion-icon name="moon"></ion-icon>
+        &nbsp;Went to sleep at:
+    </ion-label>
+    <ion-datetime-button datetime="datetime-sleep"></ion-datetime-button>
+  </ion-item>
 
-  <ion-textarea placeholder="Enter text" [autoGrow]="true">
-  
-  </ion-textarea>
+  <ion-modal [keepContentsMounted]="true">
+    <ng-template>
+      <ion-datetime id="datetime-sleep"></ion-datetime>
+    </ng-template>
+  </ion-modal>
+
+  <ion-item>
+    <ion-label>
+      <ion-icon name="partly-sunny"></ion-icon>
+         &nbsp;Woke up at:
+    </ion-label>
+    <ion-datetime-button datetime="datetime-wake"></ion-datetime-button>
+  </ion-item>
+
+  <ion-modal [keepContentsMounted]="true">
+    <ng-template>
+      <ion-datetime id="datetime-wake"></ion-datetime>
+    </ng-template>
+  </ion-modal>
+
+  <ion-item>
+    <ion-textarea placeholder="Enter text" [autoGrow]="true" [(ngModel)]="logText">
+    </ion-textarea>
+  </ion-item>
   
 </ion-content>

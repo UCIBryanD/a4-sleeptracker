@@ -14,6 +14,7 @@ import { ModalLogComponent } from '../modal-log/modal-log.component';
 export class TrackPage implements OnInit {
   time:string = "placeholderTime";
   day:string = "placeholderDate";
+  date: Date | undefined;
   constructor(private modalController: ModalController) {
     this.refreshTime();
     setInterval(() => {
@@ -25,12 +26,12 @@ export class TrackPage implements OnInit {
   }
 
   refreshTime() {
-    const curr_date = new Date()
-    this.time = curr_date.toLocaleTimeString([], {
+    this.date = new Date()
+    this.time = this.date.toLocaleTimeString([], {
       hour: '2-digit',
       minute: '2-digit'
     });
-    this.day = curr_date.toLocaleDateString('en-US', {
+    this.day = this.date.toLocaleDateString('en-US', {
       weekday: 'long',
       month: 'short',
       day: 'numeric'
@@ -42,11 +43,17 @@ export class TrackPage implements OnInit {
     const modal = await this.modalController.create({
       component: ModalLogComponent,
       componentProps: {
-        logText: "fdas"
+        logText: "",
+        timeStart: this.date,
+        timeEnd: this.date, 
+        exists: false
       }
     });
 
-    modal.present();
+    await modal.present();
+
+    const { data, role } = await modal.onDidDismiss();
+    if (role === "save") {console.log(data);}
   }
 
 
