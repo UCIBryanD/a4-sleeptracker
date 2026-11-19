@@ -13,17 +13,22 @@ import { closeOutline, partlySunny, moon } from 'ionicons/icons';
   imports: [FormsModule, IonModal, IonLabel, IonDatetimeButton, IonDatetime, IonButtons, IonButton, IonContent, IonHeader, IonTitle, IonToolbar, IonIcon, IonTextarea, IonItem]
 })
 export class ModalLogComponent  implements OnInit {
+  @Input() logCreation: Date = new Date();
   @Input() logText: string = "placeholder logText";
   @Input() timeStart: Date | undefined;
   @Input() timeEnd: Date | undefined;
   @Input() exists: boolean = false;
-  timeStartISO: string = "placeholder timeStart";
-  timeEndISO: string = "placeholder timeEnd";
+  timeStartISO: string = this.convertLocalFromUTC(new Date());
+  timeEndISO: string = this.convertLocalFromUTC(new Date());
  
   constructor(private modalController: ModalController) {
     addIcons({closeOutline, partlySunny, moon});
+  }
+
+  ngOnInit() {
     this.convertISOFromDate();
   }
+
   async close() {
     //console.log(this.logText);
     await this.modalController.dismiss(null, "cancel");
@@ -35,11 +40,13 @@ export class ModalLogComponent  implements OnInit {
   }
 
   getHistoryData() {
+    this.convertDateFromISO();
     return {
+      logCreation: this.logCreation,
       logText: this.logText,
       timeStart: this.timeStart,
       timeEnd: this.timeEnd,
-      exists: this.exists
+      exists: true
     }
   }
 
@@ -50,15 +57,18 @@ export class ModalLogComponent  implements OnInit {
 
   convertISOFromDate() {
     if (this.timeStart) {
-      this.timeStartISO = this.timeStart.toISOString();
+      this.timeStartISO = this.convertLocalFromUTC(this.timeStart);
       console.log("time start: " + this.timeStartISO);
     }
     if (this.timeEnd) {
-      this.timeStartISO = this.timeEnd.toISOString();
-      console.log("time start: " + this.timeEndISO);
+      this.timeStartISO = this.convertLocalFromUTC(this.timeEnd);
+      console.log("time end: " + this.timeEndISO);
     }
   }
 
-  ngOnInit() {}
+  convertLocalFromUTC(date: Date) {
+    const offset = date.getTimezoneOffset() * 60000;
+    return new Date(date.getTime() - offset).toISOString().slice(0, -1);
+  }
 
 }

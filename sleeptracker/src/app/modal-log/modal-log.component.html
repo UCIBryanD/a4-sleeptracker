@@ -1,6 +1,10 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title class="ion-text-center">Overnight Sleep Log for {{timeStart}}</ion-title>
+    <ion-title class="ion-text-center">Log for {{logCreation.toLocaleDateString('en-US', {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric'
+    })}}</ion-title>
     <ion-buttons slot="start">
       <ion-button (click)="close()">
         Cancel
@@ -25,7 +29,7 @@
 
   <ion-modal [keepContentsMounted]="true">
     <ng-template>
-      <ion-datetime id="datetime-sleep"></ion-datetime>
+      <ion-datetime id="datetime-sleep" [(ngModel)]="timeStartISO"></ion-datetime>
     </ng-template>
   </ion-modal>
 
@@ -39,12 +43,12 @@
 
   <ion-modal [keepContentsMounted]="true">
     <ng-template>
-      <ion-datetime id="datetime-wake"></ion-datetime>
+      <ion-datetime id="datetime-wake" [(ngModel)]="timeEndISO"></ion-datetime>
     </ng-template>
   </ion-modal>
 
   <ion-item>
-    <ion-textarea placeholder="Enter text" [autoGrow]="true" [(ngModel)]="logText">
+    <ion-textarea placeholder="Enter log description" [autoGrow]="true" [(ngModel)]="logText">
     </ion-textarea>
   </ion-item>
   

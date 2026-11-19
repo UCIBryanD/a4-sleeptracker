@@ -43,6 +43,7 @@ export class TrackPage implements OnInit {
     const modal = await this.modalController.create({
       component: ModalLogComponent,
       componentProps: {
+        logCreation: this.date,
         logText: "",
         timeStart: this.date,
         timeEnd: this.date, 
