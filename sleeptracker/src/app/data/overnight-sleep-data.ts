@@ -3,11 +3,13 @@ import { SleepData } from './sleep-data';
 export class OvernightSleepData extends SleepData {
 	private sleepStart:Date;
 	private sleepEnd:Date;
+	private logText:string = "";
 
-	constructor(sleepStart:Date, sleepEnd:Date) {
-		super();
+	constructor(sleepStart:Date, sleepEnd:Date, logDate: Date = new Date(), logText: string = "placeholder logText") {
+		super(logDate);
 		this.sleepStart = sleepStart;
 		this.sleepEnd = sleepEnd;
+		this.logText = logText;
 	}
 
 	override summaryString():string {
@@ -23,5 +25,17 @@ export class OvernightSleepData extends SleepData {
 
 	override dateString():string {
 		return "Night of " + this.sleepStart.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+	}
+
+	getLogText(): string {
+		return this.logText;
+	}
+
+	getSleepStart(): Date {
+		return this.sleepStart;
+	}
+
+	getSleepEnd(): Date {
+		return this.sleepEnd;
 	}
 }
