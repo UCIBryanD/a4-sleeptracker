@@ -1,6 +1,11 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>Sleep Log History</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="createLog()">
+        Create Log
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -14,5 +19,8 @@
           {{overnightData.getSleepEnd()}}
         </ion-label>
       </ion-item>
+      <ion-button color="danger" (click)="deleteEntry(overnightData)">
+         <ion-icon name="trash"></ion-icon>
+      </ion-button>
     } 
 </ion-content>

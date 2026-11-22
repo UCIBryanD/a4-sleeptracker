@@ -47,4 +47,9 @@ export class SleepService {
 		SleepService.AllSleepData.push(sleepData);
 		SleepService.AllSleepinessData.push(sleepData);
 	}
+
+	public deleteOvernightData(sleepData:OvernightSleepData) {
+		SleepService.AllSleepData = SleepService.AllSleepData.filter(data => data.id != sleepData.id);
+		SleepService.AllOvernightData = SleepService.AllOvernightData.filter(data => data.id != sleepData.id);
+	}
 }
