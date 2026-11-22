@@ -52,4 +52,5 @@ export class SleepService {
 		SleepService.AllSleepData = SleepService.AllSleepData.filter(data => data.id != sleepData.id);
 		SleepService.AllOvernightData = SleepService.AllOvernightData.filter(data => data.id != sleepData.id);
 	}
+
 }

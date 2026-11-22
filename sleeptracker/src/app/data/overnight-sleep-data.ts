@@ -38,4 +38,16 @@ export class OvernightSleepData extends SleepData {
 	getSleepEnd(): Date {
 		return this.sleepEnd;
 	}
+
+	setLogText(text: string) {
+		this.logText = text;
+	}
+
+	setSleepStart(date: Date) {
+		this.sleepStart = date;
+	}
+
+	setSleepEnd(date: Date) {
+		this.sleepEnd = date;
+	}
 }

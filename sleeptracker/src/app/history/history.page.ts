@@ -55,4 +55,27 @@ export class HistoryPage implements OnInit {
     this.sleepService.deleteOvernightData(overnightData);
   }
 
+  async editEntry(overnightData: OvernightSleepData) {
+    const modal = await this.modalController.create({
+      component: ModalLogComponent,
+      componentProps: {
+        logCreation: overnightData.getLoggedAt(),
+        logText: overnightData.getLogText(),
+        timeStart: overnightData.getSleepStart(),
+        timeEnd: overnightData.getSleepEnd(), 
+        exists: true
+      }
+    });
+
+    await modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+    if (role === "save") {
+      console.log(data);
+      overnightData.setSleepStart(data.timeStart);
+      overnightData.setSleepEnd(data.timeEnd);
+      overnightData.setLogText(data.logText);
+    }
+  }
+
 }

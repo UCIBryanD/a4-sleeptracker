@@ -57,6 +57,7 @@ export class ModalLogComponent  implements OnInit {
 
   convertISOFromDate() {
     if (this.timeStart) {
+      //console.log(this.timeStart);
       this.timeStartISO = this.convertLocalFromUTC(this.timeStart);
       console.log("time start: " + this.timeStartISO);
     }

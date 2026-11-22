@@ -17,4 +17,12 @@ export class SleepData {
 	dateString():string {
 		return this.loggedAt.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
 	}
+
+	getLoggedAt(): Date {
+		return this.loggedAt;
+	}
+
+	setLoggedAt(date: Date) {
+		this.loggedAt = date;
+	}
 }
