@@ -13,16 +13,17 @@ import { closeOutline, partlySunny, moon } from 'ionicons/icons';
   imports: [FormsModule, IonModal, IonLabel, IonDatetimeButton, IonDatetime, IonButtons, IonButton, IonContent, IonHeader, IonTitle, IonToolbar, IonIcon, IonTextarea, IonItem]
 })
 export class ModalLogComponent  implements OnInit {
-  @Input() logCreation: Date = new Date();
-  @Input() logText: string = "placeholder logText";
-  @Input() timeStart: Date | undefined;
-  @Input() timeEnd: Date | undefined;
-  @Input() exists: boolean = false;
-  timeStartISO: string = this.convertLocalFromUTC(new Date());
-  timeEndISO: string = this.convertLocalFromUTC(new Date());
+  @Input() logCreation!: Date;
+  @Input() logText!: string;
+  @Input() timeStart!: Date;
+  @Input() timeEnd!: Date;
+  @Input() exists!: boolean;
+  timeStartISO: string | undefined;//this.convertSingleISOFromDate(this.timeStart);
+  timeEndISO: string | undefined;//this.convertSingleISOFromDate(this.timeEnd);
  
   constructor(private modalController: ModalController) {
     addIcons({closeOutline, partlySunny, moon});
+    console.log("CONSTRUCTOR SAYS: " + this.timeStart);
   }
 
   ngOnInit() {
@@ -51,18 +52,19 @@ export class ModalLogComponent  implements OnInit {
   }
 
   convertDateFromISO() {
-    this.timeStart = new Date(this.timeStartISO);
-    this.timeEnd = new Date(this.timeEndISO);
+    if (this.timeStartISO) {this.timeStart = new Date(this.timeStartISO);}
+    if (this.timeEndISO) {this.timeEnd = new Date(this.timeEndISO);}
   }
 
   convertISOFromDate() {
+    console.log("Start Time: " + this.timeStart);
     if (this.timeStart) {
       //console.log(this.timeStart);
       this.timeStartISO = this.convertLocalFromUTC(this.timeStart);
       console.log("time start: " + this.timeStartISO);
     }
     if (this.timeEnd) {
-      this.timeStartISO = this.convertLocalFromUTC(this.timeEnd);
+      this.timeEndISO = this.convertLocalFromUTC(this.timeEnd);
       console.log("time end: " + this.timeEndISO);
     }
   }
@@ -70,6 +72,15 @@ export class ModalLogComponent  implements OnInit {
   convertLocalFromUTC(date: Date) {
     const offset = date.getTimezoneOffset() * 60000;
     return new Date(date.getTime() - offset).toISOString().slice(0, -1);
+  }
+
+  convertSingleISOFromDate(date: Date | undefined) {
+    if (date) {
+      console.log("CONVERSION FROM GIVEN DATE");
+      return this.convertLocalFromUTC(date);
+    }
+    console.log("THE DATE ISENT REAL???");
+    return this.convertLocalFromUTC(new Date());
   }
 
 }

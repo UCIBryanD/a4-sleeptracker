@@ -5,11 +5,13 @@ export class OvernightSleepData extends SleepData {
 	private sleepEnd:Date;
 	private logText:string = "";
 
-	constructor(sleepStart:Date, sleepEnd:Date, logDate: Date = new Date(), logText: string = "placeholder logText") {
+	constructor(sleepStart:Date, sleepEnd:Date, logDate: Date = new Date(), logText: string = "") {
 		super(logDate);
 		this.sleepStart = sleepStart;
 		this.sleepEnd = sleepEnd;
 		this.logText = logText;
+		console.log(this.dateString());
+		console.log(this.summaryString());
 	}
 
 	override summaryString():string {

@@ -56,6 +56,8 @@ export class HistoryPage implements OnInit {
   }
 
   async editEntry(overnightData: OvernightSleepData) {
+
+    console.log("PASSED TO MODAL: " + overnightData.getSleepStart());
     const modal = await this.modalController.create({
       component: ModalLogComponent,
       componentProps: {
