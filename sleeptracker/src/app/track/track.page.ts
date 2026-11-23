@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonLabel, IonItem, IonButton, IonContent, IonHeader, IonTitle, IonToolbar, ModalController } from '@ionic/angular/standalone';
+import { IonIcon, IonLabel, IonItem, IonButton, IonContent, IonHeader, IonTitle, IonToolbar, ModalController } from '@ionic/angular/standalone';
 import { ModalLogComponent } from '../modal-log/modal-log.component';
 import { ModalSleepinessComponent } from '../modal-sleepiness/modal-sleepiness.component';
+import { addIcons } from 'ionicons';
+import { sunny, partlySunny, cloud, cloudyNight, rainy, thunderstorm, moon } from 'ionicons/icons';
 import { SleepData } from '../data/sleep-data';
 import { OvernightSleepData } from '../data/overnight-sleep-data';
 import { SleepService } from '../services/sleep.service';
@@ -14,12 +16,13 @@ import { StanfordSleepinessData } from '../data/stanford-sleepiness-data';
   templateUrl: './track.page.html',
   styleUrls: ['./track.page.scss'],
   standalone: true,
-  imports: [IonLabel, IonItem, IonButton, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonIcon, IonLabel, IonItem, IonButton, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
 })
 export class TrackPage implements OnInit {
   time:string = "placeholderTime";
   day:string = "placeholderDate";
   date: Date | undefined;
+  timeSet:number = 0;
   timeMsgs:string[] = [
     "Ready to start the morning?",
     "Feeling tired this afternoon?",
@@ -27,7 +30,16 @@ export class TrackPage implements OnInit {
     "You should really be asleep..."
   ]
   timeMsg:string = "";
+  orderIcons: string[] = [
+    "partly-sunny",
+    "sunny",
+    "moon",
+    "cloudy-night"
+  ]
+  
+
   constructor(private modalController: ModalController, private sleepService: SleepService) {
+    addIcons({sunny, partlySunny, cloud, cloudyNight, rainy, thunderstorm, moon});
     this.refreshTime();
     setInterval(() => {
       this.refreshTime();
@@ -50,10 +62,10 @@ export class TrackPage implements OnInit {
       day: 'numeric'
     });
     const curr_time = this.date.getHours();
-    if (curr_time > 5) {this.timeMsg = this.timeMsgs[0];}
-    else if(curr_time > 12) {this.timeMsg = this.timeMsgs[1];}
-    else if (curr_time > 18){this.timeMsg = this.timeMsgs[2];}
-    else {this.timeMsg = this.timeMsgs[3];}
+    if (curr_time > 5) {this.timeSet = 0;}
+    else if(curr_time > 12) {this.timeSet = 1;}
+    else if (curr_time > 18){this.timeSet = 2;}
+    else {this.timeSet = 3;}
     //console.log(this.time);
   }
 
