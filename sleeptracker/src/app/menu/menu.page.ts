@@ -7,6 +7,7 @@ import { StanfordSleepinessData } from '../data/stanford-sleepiness-data';
 import { SleepService } from '../services/sleep.service';
 import { addIcons } from 'ionicons';
 import { trash, createOutline } from 'ionicons/icons';
+import { ModalSleepinessComponent } from '../modal-sleepiness/modal-sleepiness.component';
 
 @Component({
   selector: 'app-menu',
@@ -26,8 +27,54 @@ export class MenuPage implements OnInit {
 
   }
 
-  editLog() {
+  deleteEntry(stanford: StanfordSleepinessData) {
+    this.sleepService.deleteSleepinessData(stanford);
+  }
+
+  async editLog(stanford: StanfordSleepinessData) {
+    const curr_time = new Date();
+    const modal = await this.modalController.create({
+        component: ModalSleepinessComponent,
+        componentProps: {
+          logCreation: stanford.getLoggedAt(),
+          logText: stanford.getLogText(),
+          rating: stanford.getLoggedValue(),
+          exists: true
+        }
+    });
     
+    await modal.present();
+    
+    const { data, role } = await modal.onDidDismiss();
+    if (role === "save") {
+      if (role === "save") {
+        console.log(data);
+        stanford.setLoggedValue(data.rating);
+        stanford.setLogText(data.logText);
+      }
+    }
+  }
+
+  async createLog() {
+    const modal = await this.modalController.create({
+      component: ModalSleepinessComponent,
+      componentProps: {
+        logCreation: new Date(),
+        logText: "",
+        rating: 0,
+        exists: false
+      }
+    })
+
+    await modal.present();
+
+    const { data, role } = await modal.onDidDismiss();
+    if (role === "save") {
+      console.log(data);
+      this.sleepService.logSleepinessData(new StanfordSleepinessData(
+        data.rating, data.logCreation, data.logText
+      )); 
+    }
   }
 
 }

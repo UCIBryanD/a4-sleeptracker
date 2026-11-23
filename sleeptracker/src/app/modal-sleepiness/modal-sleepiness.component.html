@@ -11,7 +11,7 @@
       </ion-button>
     </ion-buttons>
     <ion-buttons slot="end">
-      <ion-button (click)="saveData()">
+      <ion-button (click)="save()">
         Save Log
       </ion-button>
     </ion-buttons>
@@ -19,15 +19,26 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-item>
-    <ion-label>Rate your sleepiness <ion-icon name="bed-outline"></ion-icon> </ion-label>
-    <ion-select>
-      @for (data of standfordData.ScaleValues; track data; let i = $index) {
-        <ion-select-option value="i">{{i}}</ion-select-option>
+  <ion-label>Rate your sleepiness <ion-icon name="bed-outline"></ion-icon> </ion-label>
+  <ion-list>
+    <ion-radio-group [(ngModel)]="rating">
+      @for (data of StanfordSleepinessData.ScaleValues; track data; let i = $index) {
+        @if (i != 0) {
+          <ion-item>
+            <ion-radio [value]="i" labelPlacement="stacked" alignment="start">{{i}}. </ion-radio>
+            <ion-label class="ion-text-start">{{StanfordSleepinessData.ScaleValues[i]}}</ion-label>
+          </ion-item>
+        }
       }
-    </ion-select>
+    </ion-radio-group>
+  </ion-list>
+  <ion-item>
+    <ion-textarea placeholder="Enter log description" [autoGrow]="true" [(ngModel)]="logText">
+    </ion-textarea>
   </ion-item>
+    
+  
+  
 
-  <p>content</p>
   
 </ion-content>

@@ -1,6 +1,11 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>Fatigue History</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="createLog()">
+        Log Fatigue
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -12,10 +17,10 @@
             {{fatigueData.getLoggedValue()}}. {{StanfordSleepinessData.ScaleValues[fatigueData.getLoggedValue()]}}
           </ion-label>
         </ion-label>
-        <ion-button color="primary" (click)="editLog()">
+        <ion-button color="primary" (click)="editLog(fatigueData)">
          <ion-icon name="create-outline"></ion-icon>
         </ion-button>
-        <ion-button color="danger">
+        <ion-button color="danger" (click)="deleteEntry(fatigueData)">
          <ion-icon name="trash"></ion-icon>
         </ion-button>
       </ion-item>

@@ -3,9 +3,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonButton, IonContent, IonHeader, IonTitle, IonToolbar, ModalController } from '@ionic/angular/standalone';
 import { ModalLogComponent } from '../modal-log/modal-log.component';
+import { ModalSleepinessComponent } from '../modal-sleepiness/modal-sleepiness.component';
 import { SleepData } from '../data/sleep-data';
 import { OvernightSleepData } from '../data/overnight-sleep-data';
 import { SleepService } from '../services/sleep.service';
+import { StanfordSleepinessData } from '../data/stanford-sleepiness-data';
 
 @Component({
   selector: 'app-track',
@@ -62,6 +64,28 @@ export class TrackPage implements OnInit {
       this.sleepService.logOvernightData(new OvernightSleepData(
         data.timeStart, data.timeEnd, data.logCreation, data.logText
       ));
+    }
+  }
+
+  async openFatigueLog() {
+    const modal = await this.modalController.create({
+      component: ModalSleepinessComponent,
+      componentProps: {
+        logCreation: this.date,
+        logText: "",
+        rating: 0,
+        exists: false
+      }
+    })
+
+    await modal.present();
+
+    const { data, role } = await modal.onDidDismiss();
+    if (role === "save") {
+      console.log(data);
+      this.sleepService.logSleepinessData(new StanfordSleepinessData(
+        data.rating, data.logCreation, data.logText
+      )); 
     }
   }
 
