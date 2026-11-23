@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AlertController, IonList, IonRadio, IonRadioGroup, IonModal, IonLabel, IonDatetimeButton, IonDatetime, IonIcon, IonItem, IonButtons, IonButton, IonContent, IonHeader, IonTitle, IonToolbar, IonTextarea, ModalController } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { bed } from 'ionicons/icons';
+import { sunny, partlySunny, cloud, cloudyNight, rainy, thunderstorm, moon } from 'ionicons/icons';
 import { SleepData } from '../data/sleep-data';
 import { SleepService } from '../services/sleep.service';
 import { StanfordSleepinessData } from '../data/stanford-sleepiness-data';
@@ -21,10 +21,23 @@ export class ModalSleepinessComponent  implements OnInit {
   @Input() rating!: number;
   @Input() exists!: boolean;
   @Input() id!: string | undefined;
+
+
+  static orderIcons: string[] = [
+    "none",
+    "sunny",
+    "partly-sunny",
+    "cloud",
+    "cloudy-night",
+    "rainy",
+    "thunderstorm",
+    "moon"
+  ]
   
+  ModalSleepinessComponent = ModalSleepinessComponent;
   StanfordSleepinessData = StanfordSleepinessData;
   constructor(private modalController: ModalController, private alertController: AlertController) {
-    addIcons({bed});
+    addIcons({sunny, partlySunny, cloud, cloudyNight, rainy, thunderstorm, moon});
   }
 
   ngOnInit() {
@@ -62,6 +75,7 @@ export class ModalSleepinessComponent  implements OnInit {
 
     await alert.present();
   }
+
 
   
 }

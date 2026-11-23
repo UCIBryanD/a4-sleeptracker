@@ -16,7 +16,9 @@
 
 
 3. What online resources did you consult when completing this assignment? (list specific URLs)
-
+https://ionicframework.com/docs/
+https://ionicframework.com/docs/api/radio
+https://www.youtube.com/watch?v=vCfAe2esboU
 
 
 4. What classmates or other individuals did you consult as part of this assignment? What did you discuss?

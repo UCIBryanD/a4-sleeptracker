@@ -10,15 +10,16 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-    @for (fatigueData of SleepService.AllSleepinessData; track fatigueData) {
+    @for (fatigueData of SleepService.AllSleepinessData; track fatigueData; let i = $index) {
       <ion-item>
         <ion-label>
           <ion-label>
-            <h1><b><u>{{fatigueData.dateString()}}</u></b></h1>
-          </ion-label>
+            <h1><b>{{fatigueData.dateString()}}</b></h1>
+          </ion-label>  
           <ion-label>
             {{fatigueData.summaryString()}}
           </ion-label>
+          <ion-label class="ion-text-wrap ion-text-center"><ion-icon name="{{ModalSleepinessComponent.orderIcons[fatigueData.getLoggedValue()]}}" style="font-size: 48px;"></ion-icon></ion-label>
           @if (fatigueData.getLogText() != "") {
             <ion-label>
               <h6>Notes: "{{fatigueData.getLogText()}}"</h6>

@@ -6,7 +6,7 @@ import { SleepData } from '../data/sleep-data';
 import { StanfordSleepinessData } from '../data/stanford-sleepiness-data';
 import { SleepService } from '../services/sleep.service';
 import { addIcons } from 'ionicons';
-import { trash, createOutline } from 'ionicons/icons';
+import { trash, createOutline, sunny, partlySunny, cloud, cloudyNight, rainy, thunderstorm, moon } from 'ionicons/icons';
 import { ModalSleepinessComponent } from '../modal-sleepiness/modal-sleepiness.component';
 
 @Component({
@@ -19,8 +19,9 @@ import { ModalSleepinessComponent } from '../modal-sleepiness/modal-sleepiness.c
 export class MenuPage implements OnInit {
   SleepService = SleepService;
   StanfordSleepinessData = StanfordSleepinessData;
+  ModalSleepinessComponent = ModalSleepinessComponent;
   constructor(private modalController: ModalController, private sleepService: SleepService) {
-      addIcons({trash, createOutline});
+      addIcons({trash, createOutline, sunny, partlySunny, cloud, cloudyNight, rainy, thunderstorm, moon});
       //sleepService.getStorage();
   }
 
