@@ -1,0 +1,48 @@
+import { Component, Input, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { IonSelectOption, IonSelect, IonModal, IonLabel, IonDatetimeButton, IonDatetime, IonIcon, IonItem, IonButtons, IonButton, IonContent, IonHeader, IonTitle, IonToolbar, IonTextarea, ModalController } from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { bed } from 'ionicons/icons';
+import { StanfordSleepinessData } from '../data/stanford-sleepiness-data';
+
+@Component({
+  selector: 'app-modal-sleepiness',
+  templateUrl: './modal-sleepiness.component.html',
+  styleUrls: ['./modal-sleepiness.component.scss'],
+})
+export class ModalSleepinessComponent  implements OnInit {
+  @Input() logCreation!: Date;
+  @Input() logText!: string;
+  @Input() rating!: number;
+  @Input() exists!: boolean;
+ 
+  constructor(private modalController: ModalController, private standfordData: StanfordSleepinessData) {
+    addIcons({bed});
+  }
+
+  ngOnInit() {
+    
+  }
+
+  async close() {
+    //console.log(this.logText);
+    await this.modalController.dismiss(null, "cancel");
+  }
+
+  async save() {
+    const data = this.getData();
+    await this.modalController.dismiss(data, "save");
+  }
+
+  getData() {
+    return {
+      logCreation: this.logCreation,
+      logText: this.logText,
+      rating: this.rating,
+      exists: true
+    }
+  }
+
+  
+}

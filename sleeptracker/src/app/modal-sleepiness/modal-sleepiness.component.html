@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">Log for {{logCreation.toLocaleDateString('en-US', {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric'
+    })}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="close()">
+        Cancel
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="saveData()">
+        Save Log
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-item>
+    <ion-label>Rate your sleepiness <ion-icon name="bed-outline"></ion-icon> </ion-label>
+    <ion-select>
+      @for (data of standfordData.ScaleValues; track data; let i = $index) {
+        <ion-select-option value="i">{{i}}</ion-select-option>
+      }
+    </ion-select>
+  </ion-item>
+
+  <p>content</p>
+  
+</ion-content>

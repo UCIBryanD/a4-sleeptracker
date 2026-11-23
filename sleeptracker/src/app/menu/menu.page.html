@@ -1,13 +1,23 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>menu</ion-title>
+    <ion-title>Fatigue History</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">menu</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    @for (fatigueData of SleepService.AllSleepinessData; track fatigueData) {
+      <ion-item>
+        <ion-label>
+          <ion-label>
+            {{fatigueData.getLoggedValue()}}. {{StanfordSleepinessData.ScaleValues[fatigueData.getLoggedValue()]}}
+          </ion-label>
+        </ion-label>
+        <ion-button color="primary" (click)="editLog()">
+         <ion-icon name="create-outline"></ion-icon>
+        </ion-button>
+        <ion-button color="danger">
+         <ion-icon name="trash"></ion-icon>
+        </ion-button>
+      </ion-item>
+    } 
 </ion-content>

@@ -6,7 +6,7 @@ import { OvernightSleepData } from '../data/overnight-sleep-data';
 import { StanfordSleepinessData } from '../data/stanford-sleepiness-data';
 import { RouterLink } from '@angular/router';
 import { addIcons } from 'ionicons';
-import { moonOutline, library, menuOutline } from 'ionicons/icons';
+import { moon, alarm, happy } from 'ionicons/icons';
 
 @Component({
   selector: 'app-home',
@@ -16,7 +16,7 @@ import { moonOutline, library, menuOutline } from 'ionicons/icons';
 })
 export class HomePage {
 	constructor(public sleepService:SleepService) {
-		addIcons({ moonOutline, library, menuOutline });
+		addIcons({ moon, alarm, happy });
 	}
 
 	ngOnInit() {

@@ -12,7 +12,7 @@ import { closeOutline, partlySunny, moon } from 'ionicons/icons';
   standalone: true,
   imports: [FormsModule, IonModal, IonLabel, IonDatetimeButton, IonDatetime, IonButtons, IonButton, IonContent, IonHeader, IonTitle, IonToolbar, IonIcon, IonTextarea, IonItem]
 })
-export class ModalLogComponent  implements OnInit {
+export class ModalLogComponent implements OnInit {
   @Input() logCreation!: Date;
   @Input() logText!: string;
   @Input() timeStart!: Date;

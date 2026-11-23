@@ -14,6 +14,7 @@ export class StanfordSleepinessData extends SleepData {
 	'No longer fighting sleep, sleep onset soon; having dream-like thoughts']; //7
 
 	private loggedValue:number;
+	private logText:string = "";
 
 	constructor(loggedValue:number, loggedAt:Date = new Date()) {
 		super();
@@ -24,4 +25,21 @@ export class StanfordSleepinessData extends SleepData {
 	override summaryString():string {
 		return this.loggedValue + ": " + StanfordSleepinessData.ScaleValues[this.loggedValue];
 	}
+
+	getLogText() {
+		return this.logText;
+	}
+
+	setLogText(text:string) {
+		this.logText = text;
+	}
+
+	getLoggedValue() {
+		return this.loggedValue;
+	}
+
+	setLoggedValue(value: number) {
+		this.loggedValue = value;
+	}
+
 }

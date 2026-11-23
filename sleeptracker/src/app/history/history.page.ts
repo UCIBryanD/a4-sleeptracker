@@ -7,7 +7,7 @@ import { SleepData } from '../data/sleep-data';
 import { OvernightSleepData } from '../data/overnight-sleep-data';
 import { SleepService } from '../services/sleep.service';
 import { addIcons } from 'ionicons';
-import { trash } from 'ionicons/icons';
+import { trash, createOutline } from 'ionicons/icons';
 
 
 @Component({
@@ -21,7 +21,7 @@ export class HistoryPage implements OnInit {
   SleepService = SleepService;
   
   constructor(private modalController: ModalController, private sleepService: SleepService) {
-    addIcons({trash});
+    addIcons({trash, createOutline});
   }
 
   ngOnInit() {
