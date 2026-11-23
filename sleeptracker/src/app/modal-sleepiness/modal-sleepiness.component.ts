@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonList, IonRadio, IonRadioGroup, IonModal, IonLabel, IonDatetimeButton, IonDatetime, IonIcon, IonItem, IonButtons, IonButton, IonContent, IonHeader, IonTitle, IonToolbar, IonTextarea, ModalController } from '@ionic/angular/standalone';
+import { AlertController, IonList, IonRadio, IonRadioGroup, IonModal, IonLabel, IonDatetimeButton, IonDatetime, IonIcon, IonItem, IonButtons, IonButton, IonContent, IonHeader, IonTitle, IonToolbar, IonTextarea, ModalController } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { bed } from 'ionicons/icons';
 import { SleepData } from '../data/sleep-data';
@@ -20,9 +20,10 @@ export class ModalSleepinessComponent  implements OnInit {
   @Input() logText!: string;
   @Input() rating!: number;
   @Input() exists!: boolean;
+  @Input() id!: string | undefined;
   
   StanfordSleepinessData = StanfordSleepinessData;
-  constructor(private modalController: ModalController) {
+  constructor(private modalController: ModalController, private alertController: AlertController) {
     addIcons({bed});
   }
 
@@ -37,7 +38,10 @@ export class ModalSleepinessComponent  implements OnInit {
 
   async save() {
     const data = this.getData();
-    await this.modalController.dismiss(data, "save");
+    if (!this.rating || this.rating == 0) {
+      this.error("Select a Sleepiness", "Please select an option for your sleepiness");
+    }
+    else {await this.modalController.dismiss(data, "save");}
   }
 
   getData() {
@@ -47,6 +51,16 @@ export class ModalSleepinessComponent  implements OnInit {
       rating: this.rating,
       exists: true
     }
+  }
+
+  async error(title: string, msg: string) {
+    const alert = await this.alertController.create({
+      header: title,
+      message: msg,
+      buttons: ['Okay'],
+    });
+
+    await alert.present();
   }
 
   

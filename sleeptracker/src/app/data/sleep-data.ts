@@ -3,11 +3,16 @@ import { nanoid } from 'nanoid';
 export class SleepData {
 	id:string;
 	loggedAt:Date;
+	dataType:string|undefined;
 
-	constructor(logDate: Date = new Date()) {
+	constructor(dataType: string, logDate: Date = new Date(), setid?: string) {
 		//Assign a random (unique) ID. This may be useful for comparison (e.g., are two logged entries the same).
-		this.id = nanoid();
+		if (!setid) {
+			this.id = nanoid();
+		}
+		else {this.id = setid;}
 		this.loggedAt = logDate;
+		this.dataType = dataType;
 	}
 
 	summaryString():string {
@@ -24,5 +29,9 @@ export class SleepData {
 
 	setLoggedAt(date: Date) {
 		this.loggedAt = date;
+	}
+
+	getId() {
+		return this.id;
 	}
 }

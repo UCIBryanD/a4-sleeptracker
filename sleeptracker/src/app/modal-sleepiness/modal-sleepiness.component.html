@@ -19,14 +19,14 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-label>Rate your sleepiness <ion-icon name="bed-outline"></ion-icon> </ion-label>
+  <ion-item><ion-label class="ion-text"><h1>Rate your sleepiness</h1></ion-label></ion-item>
   <ion-list>
     <ion-radio-group [(ngModel)]="rating">
       @for (data of StanfordSleepinessData.ScaleValues; track data; let i = $index) {
         @if (i != 0) {
           <ion-item>
             <ion-radio [value]="i" labelPlacement="stacked" alignment="start">{{i}}. </ion-radio>
-            <ion-label class="ion-text-start">{{StanfordSleepinessData.ScaleValues[i]}}</ion-label>
+            <ion-label class="ion-text-start ion-text-wrap">{{StanfordSleepinessData.ScaleValues[i]}}</ion-label>
           </ion-item>
         }
       }
@@ -36,6 +36,9 @@
     <ion-textarea placeholder="Enter log description" [autoGrow]="true" [(ngModel)]="logText">
     </ion-textarea>
   </ion-item>
+  @if (exists) {
+    <p>Log ID: {{id}}</p>
+  }
     
   
   

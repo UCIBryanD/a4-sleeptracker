@@ -21,10 +21,11 @@ export class MenuPage implements OnInit {
   StanfordSleepinessData = StanfordSleepinessData;
   constructor(private modalController: ModalController, private sleepService: SleepService) {
       addIcons({trash, createOutline});
+      //sleepService.getStorage();
   }
 
   ngOnInit() {
-
+    //this.sleepService.getStorage();
   }
 
   deleteEntry(stanford: StanfordSleepinessData) {
@@ -39,6 +40,7 @@ export class MenuPage implements OnInit {
           logCreation: stanford.getLoggedAt(),
           logText: stanford.getLogText(),
           rating: stanford.getLoggedValue(),
+          id: stanford.getId(),
           exists: true
         }
     });
@@ -48,9 +50,7 @@ export class MenuPage implements OnInit {
     const { data, role } = await modal.onDidDismiss();
     if (role === "save") {
       if (role === "save") {
-        console.log(data);
-        stanford.setLoggedValue(data.rating);
-        stanford.setLogText(data.logText);
+        this.sleepService.logSleepinessData(new StanfordSleepinessData(data.rating, data.logCreation, data.logText, stanford.id));
       }
     }
   }
@@ -76,5 +76,6 @@ export class MenuPage implements OnInit {
       )); 
     }
   }
+
 
 }

@@ -22,9 +22,11 @@ export class HistoryPage implements OnInit {
   
   constructor(private modalController: ModalController, private sleepService: SleepService) {
     addIcons({trash, createOutline});
+    //sleepService.getStorage();
   }
 
   ngOnInit() {
+    //this.sleepService.getStorage();
   }
 
   async createLog() {
@@ -64,7 +66,8 @@ export class HistoryPage implements OnInit {
         logCreation: overnightData.getLoggedAt(),
         logText: overnightData.getLogText(),
         timeStart: overnightData.getSleepStart(),
-        timeEnd: overnightData.getSleepEnd(), 
+        timeEnd: overnightData.getSleepEnd(),
+        id: overnightData.getId(),
         exists: true
       }
     });
@@ -73,10 +76,7 @@ export class HistoryPage implements OnInit {
 
     const { data, role } = await modal.onWillDismiss();
     if (role === "save") {
-      console.log(data);
-      overnightData.setSleepStart(data.timeStart);
-      overnightData.setSleepEnd(data.timeEnd);
-      overnightData.setLogText(data.logText);
+      this.sleepService.logOvernightData(new OvernightSleepData(data.timeStart, data.timeEnd, data.logCreation, data.logText, overnightData.id));
     }
   }
 

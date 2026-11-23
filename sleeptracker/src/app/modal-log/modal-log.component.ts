@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonModal, IonLabel, IonDatetimeButton, IonDatetime, IonIcon, IonItem, IonButtons, IonButton, IonContent, IonHeader, IonTitle, IonToolbar, IonTextarea, ModalController } from '@ionic/angular/standalone';
+import { AlertController, IonModal, IonLabel, IonDatetimeButton, IonDatetime, IonIcon, IonItem, IonButtons, IonButton, IonContent, IonHeader, IonTitle, IonToolbar, IonTextarea, ModalController } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { closeOutline, partlySunny, moon } from 'ionicons/icons';
 
@@ -18,10 +18,11 @@ export class ModalLogComponent implements OnInit {
   @Input() timeStart!: Date;
   @Input() timeEnd!: Date;
   @Input() exists!: boolean;
+  @Input() id!: string | undefined;
   timeStartISO: string | undefined;//this.convertSingleISOFromDate(this.timeStart);
   timeEndISO: string | undefined;//this.convertSingleISOFromDate(this.timeEnd);
  
-  constructor(private modalController: ModalController) {
+  constructor(private modalController: ModalController, private alertController: AlertController) {
     addIcons({closeOutline, partlySunny, moon});
     console.log("CONSTRUCTOR SAYS: " + this.timeStart);
   }
@@ -37,7 +38,20 @@ export class ModalLogComponent implements OnInit {
 
   async saveHistoryData() {
     const data = this.getHistoryData();
-    await this.modalController.dismiss(data, "save");
+    if (data.timeEnd < data.timeStart) {
+      this.error("Invalid Sleep Log", "The provided wake-up time was set before the provided sleep-time");
+    }
+    else {await this.modalController.dismiss(data, "save");}
+  }
+
+  async error(title: string, msg: string) {
+    const alert = await this.alertController.create({
+      header: title,
+      message: msg,
+      buttons: ['Confirm'],
+    });
+
+    await alert.present();
   }
 
   getHistoryData() {

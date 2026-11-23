@@ -51,7 +51,8 @@
     <ion-textarea placeholder="Enter log description" [autoGrow]="true" [(ngModel)]="logText">
     </ion-textarea>
   </ion-item>
-
-  <p>{{timeStartISO}}</p>
+  @if (exists) {
+    <p>Log ID: {{id}}</p>
+  }
   
 </ion-content>

@@ -13,12 +13,19 @@
     @for (overnightData of SleepService.AllOvernightData; track overnightData) {
       <ion-item>
         <ion-label>
+          
           <ion-label>
-            {{overnightData.getSleepStart()}}
+            <h1><b><u>{{overnightData.dateString()}}</u></b></h1>
           </ion-label>
+          
           <ion-label>
-            {{overnightData.getSleepEnd()}}
+            <h2>You slept for: {{overnightData.summaryString()}}</h2>
           </ion-label>
+          @if (overnightData.getLogText() != "") {
+            <ion-label>
+              <h6>Notes: "{{overnightData.getLogText()}}"</h6>
+            </ion-label>
+          }
         </ion-label>
         <ion-button color="primary" (click)="editEntry(overnightData)">
          <ion-icon name="create-outline"></ion-icon>

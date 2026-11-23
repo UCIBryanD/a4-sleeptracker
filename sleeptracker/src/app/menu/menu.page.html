@@ -14,8 +14,16 @@
       <ion-item>
         <ion-label>
           <ion-label>
-            {{fatigueData.getLoggedValue()}}. {{StanfordSleepinessData.ScaleValues[fatigueData.getLoggedValue()]}}
+            <h1><b><u>{{fatigueData.dateString()}}</u></b></h1>
           </ion-label>
+          <ion-label>
+            {{fatigueData.summaryString()}}
+          </ion-label>
+          @if (fatigueData.getLogText() != "") {
+            <ion-label>
+              <h6>Notes: "{{fatigueData.getLogText()}}"</h6>
+            </ion-label>
+          }
         </ion-label>
         <ion-button color="primary" (click)="editLog(fatigueData)">
          <ion-icon name="create-outline"></ion-icon>

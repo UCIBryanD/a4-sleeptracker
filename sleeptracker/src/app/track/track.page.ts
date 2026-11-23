@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonButton, IonContent, IonHeader, IonTitle, IonToolbar, ModalController } from '@ionic/angular/standalone';
+import { IonLabel, IonItem, IonButton, IonContent, IonHeader, IonTitle, IonToolbar, ModalController } from '@ionic/angular/standalone';
 import { ModalLogComponent } from '../modal-log/modal-log.component';
 import { ModalSleepinessComponent } from '../modal-sleepiness/modal-sleepiness.component';
 import { SleepData } from '../data/sleep-data';
@@ -14,18 +14,26 @@ import { StanfordSleepinessData } from '../data/stanford-sleepiness-data';
   templateUrl: './track.page.html',
   styleUrls: ['./track.page.scss'],
   standalone: true,
-  imports: [IonButton, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonLabel, IonItem, IonButton, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
 })
 export class TrackPage implements OnInit {
   time:string = "placeholderTime";
   day:string = "placeholderDate";
   date: Date | undefined;
+  timeMsgs:string[] = [
+    "Ready to start the morning?",
+    "Feeling tired this afternoon?",
+    "Ready to go to sleep?",
+    "You should really be asleep..."
+  ]
+  timeMsg:string = "";
   constructor(private modalController: ModalController, private sleepService: SleepService) {
     this.refreshTime();
     setInterval(() => {
       this.refreshTime();
     }, 1000);
-  }
+    //sleepService.getStorage();
+  } 
 
   ngOnInit() {
   }
@@ -41,7 +49,12 @@ export class TrackPage implements OnInit {
       month: 'short',
       day: 'numeric'
     });
-    console.log(this.time);
+    const curr_time = this.date.getHours();
+    if (curr_time > 5) {this.timeMsg = this.timeMsgs[0];}
+    else if(curr_time > 12) {this.timeMsg = this.timeMsgs[1];}
+    else if (curr_time > 18){this.timeMsg = this.timeMsgs[2];}
+    else {this.timeMsg = this.timeMsgs[3];}
+    //console.log(this.time);
   }
 
   async openModalLog() {
@@ -87,6 +100,14 @@ export class TrackPage implements OnInit {
         data.rating, data.logCreation, data.logText
       )); 
     }
+  }
+
+  async getDatabase() {
+    this.sleepService.getStorage();
+  }
+
+  async deleteDatabase() {
+    this.sleepService.deleteStorage();
   }
 
 
